@@ -1,6 +1,7 @@
 # pip install pyinstaller
 # Windows Freeze: Run > cmd > pyinstaller --onefile --noconsole xdelta3ui.py
 
+import os
 import subprocess
 from subprocess import CREATE_NO_WINDOW
 import tkinter as tk
@@ -19,10 +20,11 @@ def source():
     textbox_source.config(text=path_source)
 
 def apply_patch():
-    subprocess.run(["xdelta3", "-d", "-s", path_source, path_patch, "patched"], creationflags=CREATE_NO_WINDOW)
+    patched_file = os.path.splitext(path_source)[0] + "_patched" + os.path.splitext(path_source)[1]
+    subprocess.run(["xdelta3", "-d", "-s", path_source, path_patch, patched_file], creationflags=CREATE_NO_WINDOW)
     popup = tk.Tk()
     popup.wm_title("Operation Completed!")
-    popup_label = ttk.Label(popup, text="File patched successfully!")
+    popup_label = ttk.Label(popup, text="File patched successfully and saved at \n" + patched_file)
     popup_label.pack(side="top", fill="x", pady=10)
     popup_button = ttk.Button(popup, text="OK", command = popup.destroy)
     popup_button.pack()
@@ -40,10 +42,11 @@ def modified():
     textbox_modified.config(text=path_modified)
 
 def create_patch():
-    subprocess.run(["xdelta3", "-f", "-e", "-s", path_original, path_modified, path_modified + ".xdelta"], creationflags=CREATE_NO_WINDOW)
+    patch_file = os.path.splitext(path_modified)[0] + "_patch.xdelta"
+    subprocess.run(["xdelta3", "-f", "-e", "-s", path_original, path_modified, patch_file], creationflags=CREATE_NO_WINDOW)
     popup = tk.Tk()
     popup.wm_title("Operation Completed!")
-    popup_label = ttk.Label(popup, text="Patch created successfully!")
+    popup_label = ttk.Label(popup, text="Patch created successfully and saved at \n" + patch_file)
     popup_label.pack(side="top", fill="x", pady=10)
     popup_button = ttk.Button(popup, text="OK", command = popup.destroy)
     popup_button.pack()
@@ -73,20 +76,20 @@ TAB_CONTROL.add(TAB2, text="Create Patch")
 label_patch = ttk.Label(TAB1, text="Patch:")
 label_patch.grid(row=0, column=0, columnspan=6, sticky="news")
 
-textbox_patch = ttk.Label(TAB1, text="ok", borderwidth=2, relief="groove")
+textbox_patch = ttk.Label(TAB1, text="Please select a path...                    ", borderwidth=2, relief="groove")
 textbox_patch.grid(row=1, column=0, columnspan=5, sticky="news")
 
-button_patch = ttk.Button(TAB1, text="Open...", command = patch)
+button_patch = ttk.Button(TAB1, text="Browse", command = patch)
 button_patch.grid(row=1, column=5, sticky="e")
 
 # Source
 label_source = ttk.Label(TAB1, text="Source:")
 label_source.grid(row=2, column=0, columnspan=6, sticky='news')
 
-textbox_source = ttk.Label(TAB1, text="ok", borderwidth=2, relief="groove")
+textbox_source = ttk.Label(TAB1, text="Please select a path...                    ", borderwidth=2, relief="groove")
 textbox_source.grid(row=3, column=0, columnspan=5, sticky="news")
 
-button_source = ttk.Button(TAB1, text="Open...", command = source)
+button_source = ttk.Button(TAB1, text="Browse", command = source)
 button_source.grid(row=3, column=5, sticky="news")
 
 # Execute Command
@@ -100,20 +103,20 @@ button_apply.grid(row=4, column=0, sticky="W")
 label_original = ttk.Label(TAB2, text="Original File:")
 label_original.grid(row=0, column=0, columnspan=6, sticky="news")
 
-textbox_original = ttk.Label(TAB2, text="ok", borderwidth=2, relief="groove")
+textbox_original = ttk.Label(TAB2, text="Please select a path...                    ", borderwidth=2, relief="groove")
 textbox_original.grid(row=1, column=0, columnspan=5, sticky="news")
 
-button_original = ttk.Button(TAB2, text="Open...", command = original)
+button_original = ttk.Button(TAB2, text="Browse", command = original)
 button_original.grid(row=1, column=5, sticky="e")
 
 # Modified
 label_modified = ttk.Label(TAB2, text="Modified File:")
 label_modified.grid(row=2, column=0, columnspan=6, sticky='news')
 
-textbox_modified = ttk.Label(TAB2, text="ok", borderwidth=2, relief="groove")
+textbox_modified = ttk.Label(TAB2, text="Please select a path...                    ", borderwidth=2, relief="groove")
 textbox_modified.grid(row=3, column=0, columnspan=5, sticky="news")
 
-button_modified = ttk.Button(TAB2, text="Open...", command = modified)
+button_modified = ttk.Button(TAB2, text="Browse", command = modified)
 button_modified.grid(row=3, column=5, sticky="news")
 
 # Execute Command
