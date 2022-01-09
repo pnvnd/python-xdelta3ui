@@ -4,7 +4,7 @@
 
 import os
 import subprocess
-from subprocess import CREATE_NO_WINDOW
+# from subprocess import CREATE_NO_WINDOW
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
@@ -22,7 +22,7 @@ def source():
 
 def apply_patch():
     patched_file = os.path.splitext(path_source)[0] + "_patched" + os.path.splitext(path_source)[1]
-    subprocess.run(["xdelta3", "-d", "-s", path_source, path_patch, patched_file], creationflags=CREATE_NO_WINDOW)
+    subprocess.run(["xdelta3", "-d", "-s", path_source, path_patch, patched_file]) #, creationflags=CREATE_NO_WINDOW)
     popup = tk.Tk()
     popup.wm_title("Operation Completed!")
     popup_label = ttk.Label(popup, text="File patched successfully and saved at \n" + patched_file)
@@ -44,7 +44,7 @@ def modified():
 
 def create_patch():
     patch_file = os.path.splitext(path_modified)[0] + "_patch.xdelta"
-    subprocess.run(["xdelta3", "-f", "-e", "-s", path_original, path_modified, patch_file], creationflags=CREATE_NO_WINDOW)
+    subprocess.run(["xdelta3", "-f", "-e", "-s", path_original, path_modified, patch_file]) #, creationflags=CREATE_NO_WINDOW)
     popup = tk.Tk()
     popup.wm_title("Operation Completed!")
     popup_label = ttk.Label(popup, text="Patch created successfully and saved at \n" + patch_file)
