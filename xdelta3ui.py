@@ -1,5 +1,6 @@
 # pip install pyinstaller
 # Windows Freeze: Run > cmd > pyinstaller --onefile --noconsole xdelta3ui.py
+# CREATE_NO_WINDOW doesn't work on Mac
 
 import os
 import subprocess

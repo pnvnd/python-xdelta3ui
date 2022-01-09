@@ -7,3 +7,4 @@ Run the script from a terminal to get the user interface:
 
 ![Screenshot 1](xdelta3ui_01.png)
 ![Screenshot 2](xdelta3ui_02.png)
+![Screenshot 3](xdelta3ui_03.png)
